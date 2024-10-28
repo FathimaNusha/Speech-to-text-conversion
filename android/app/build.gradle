@@ -1,0 +1,54 @@
+// Apply the Android and Kotlin Gradle plugins
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dev.flutter.flutter-gradle-plugin'
+}
+
+// Load local properties from local.properties file
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader("UTF-8") { reader ->
+        localProperties.load(reader)
+    }
+}
+
+// Retrieve version details and SDK configurations from local.properties
+def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion', '21').toInteger()
+def flutterCompileSdkVersion = localProperties.getProperty('flutter.compileSdkVersion', '34').toInteger() // Updated to 34
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.targetSdkVersion', '34').toInteger() // Updated to 34
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode', '1').toInteger()
+def flutterVersionName = localProperties.getProperty('flutter.versionName', '1.0')
+
+// Android configuration
+android {
+    namespace "com.example.nusha" // Change this to your actual package name
+    compileSdkVersion flutterCompileSdkVersion // Use the value from local properties
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        // Specify your own unique Application ID.
+        applicationId "com.example.nusha" // Change this to your actual package name
+
+        // Set the minimum and target SDK versions.
+        minSdkVersion flutterMinSdkVersion
+        targetSdkVersion flutterTargetSdkVersion
+
+        versionCode flutterVersionCode
+        versionName flutterVersionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
