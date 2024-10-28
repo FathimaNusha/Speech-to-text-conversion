@@ -9,6 +9,8 @@ class ContinuousSpeechRecognition extends StatefulWidget {
       _ContinuousSpeechRecognitionState();
 }
 
+//changes made
+
 class _ContinuousSpeechRecognitionState
     extends State<ContinuousSpeechRecognition> {
   late SpeechToText _speech;
